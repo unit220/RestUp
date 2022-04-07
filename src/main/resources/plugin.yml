@@ -1,0 +1,6 @@
+name: RestUp
+version: '${project.version}'
+main: restup.restup.RestUp
+api-version: 1.18
+authors: [ unit220 ]
+description: A minecraft plugin that lets users skip the day by resting at a campfire
