@@ -18,6 +18,11 @@ public class RestEvent implements Listener {
             Player player = event.getPlayer();
 
             if(block.getType() == Material.CAMPFIRE) {
+                // quits if it is already night
+                if(world.getTime() >= 13000) {
+                    player.sendMessage("You cannot pass the day while it is night!");
+                    return;
+                }
                 // quits out if holding something
                 // TODO check against a list of invalid items
                 if(player.getInventory().getItemInMainHand().getType() != Material.AIR) {
