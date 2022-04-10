@@ -14,12 +14,14 @@ public final class RestUp extends JavaPlugin {
         // Plugin startup logic
         Bukkit.getLogger().info("RestUp: loading!");
 
+        // config stuff
         Bukkit.getLogger().info("RestUp: loading invalid items");
         saveDefaultConfig();
         invalidItemsList = this.getConfig().getStringList("invalidItems");
         Bukkit.getLogger().info("RestUp: invalid items:");
         Bukkit.getLogger().info(Arrays.toString(invalidItemsList.toArray()));
 
+        // event stuff
         Bukkit.getPluginManager().registerEvents(new RestEvent(), this);
     }
 

@@ -21,10 +21,10 @@ public class RestEvent implements Listener {
             Player player = event.getPlayer();
 
             // See what user is holding
-            Bukkit.getLogger().info(player.getInventory().getItemInMainHand().getType().toString());
+            // Bukkit.getLogger().info(player.getInventory().getItemInMainHand().getType().toString());
 
             if(block.getType() == Material.CAMPFIRE) {
-                // quits out if holding something
+                // quits out if holding something cookable
                 if(RestUp.getInvalidItemsList().contains(player.getInventory().getItemInMainHand().getType().toString())) {
                     return;
                 }
@@ -33,11 +33,6 @@ public class RestEvent implements Listener {
                     player.sendMessage("You cannot pass the day while it is night!");
                     return;
                 }
-                // TODO check against a list of invalid items instead
-//                if(player.getInventory().getItemInMainHand().getType() != Material.PORKCHOP) {
-//                    player.sendMessage("You cannot rest with stuff in hand, relax!");
-//                    return;
-//                }
 
                 // spawn an arrow to act as an entity for the player to sit on
                 Entity arrow = world.spawnArrow(player.getLocation().add(0,-0.5D,0),new Vector(0,90,0),0,0);
