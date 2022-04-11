@@ -15,16 +15,16 @@ public final class RestUp extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        Bukkit.getLogger().info("RestUp: loading!");
+        Bukkit.getLogger().info("[RestUp] loading!");
 
         // config stuff
-        Bukkit.getLogger().info("RestUp: loading invalid items");
+        Bukkit.getLogger().info("[RestUp] loading invalid items");
         saveDefaultConfig();
         invalidItemsList = this.getConfig().getStringList("invalidItems");
         restPercent = this.getConfig().getDouble("restPercent");
-        Bukkit.getLogger().info("RestUp: invalid items:");
+        Bukkit.getLogger().info("[RestUp] invalid items:");
         Bukkit.getLogger().info(Arrays.toString(invalidItemsList.toArray()));
-        Bukkit.getLogger().info("RestUp: % of players needed to rest:");
+        Bukkit.getLogger().info("[RestUp] % of players needed to rest:");
         Bukkit.getLogger().info(String.valueOf(restPercent));
 
         // event stuff
@@ -34,7 +34,7 @@ public final class RestUp extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        Bukkit.getLogger().info("RestUp: shutting down!");
+        Bukkit.getLogger().info("[RestUp] shutting down!");
     }
 
     public static List<String> getInvalidItemsList() {
