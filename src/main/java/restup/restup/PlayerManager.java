@@ -5,13 +5,15 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 
 public class PlayerManager {
-    ArrayList<Player> restingPlayers = new ArrayList<Player>();
+    ArrayList<Player> restingPlayers;
 
-    public void addRester(Player player) { restingPlayers.add(player); }
+    public PlayerManager() { this.restingPlayers = new ArrayList<Player>(); }
 
-    public void removeRester(Player player) { restingPlayers.remove(player); }
+    public void addRester(Player player) { this.restingPlayers.add(player); }
 
-    public ArrayList<Player> getRestingPlayers() { return restingPlayers; }
+    public void removeRester(Player player) { this.restingPlayers.remove(player); }
 
-    public void clearResters() { restingPlayers.clear(); }
+    public ArrayList<Player> getRestingPlayers() { return this.restingPlayers; }
+
+    public void clearResters() { this.restingPlayers.clear(); }
 }
