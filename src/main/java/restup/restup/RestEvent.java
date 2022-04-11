@@ -50,7 +50,7 @@ public class RestEvent implements Listener {
 //                BukkitTask removeRester = (BukkitTask) new RemoveRester(plugin).runTaskLater(plugin, 120L);
 
                 // Calc % of people resting
-                double percentResting = ((double)playerManager.getRestingPlayersArray().size()/(double)event.getClickedBlock()
+                double percentResting = ((double)playerManager.getRestingPlayers().size()/(double)event.getClickedBlock()
                         .getWorld().getPlayers().size())*100;
                 // tell everyone
                 for (Player p : event.getClickedBlock().getWorld().getPlayers()) {

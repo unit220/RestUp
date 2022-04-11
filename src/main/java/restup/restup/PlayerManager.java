@@ -7,15 +7,11 @@ import java.util.ArrayList;
 public class PlayerManager {
     ArrayList<Player> restingPlayers = new ArrayList<Player>();
 
-    public void addRester(Player player) {
-        restingPlayers.add(player);
-    }
+    public void addRester(Player player) { restingPlayers.add(player); }
 
-    public void removeRester(Player player) {
-        restingPlayers.remove(player);
-    }
+    public void removeRester(Player player) { restingPlayers.remove(player); }
 
-    public ArrayList<Player> getRestingPlayersArray() { return restingPlayers; }
+    public ArrayList<Player> getRestingPlayers() { return restingPlayers; }
 
     public void clearResters() { restingPlayers.clear(); }
 }
