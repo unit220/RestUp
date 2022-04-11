@@ -10,9 +10,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
+import restup.restup.tasks.RemoveRester;
+
+import java.util.ArrayList;
 
 public class RestEvent implements Listener {
+//    RestUp plugin = new RestUp();
+    PlayerManager playerManager = new PlayerManager();
+    
     @EventHandler
     public void PlayerInteractEvent(PlayerInteractEvent event) {
         if((event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
@@ -34,13 +41,27 @@ public class RestEvent implements Listener {
                     return;
                 }
 
+                player.sendMessage("You sit down to take a rest");
                 // spawn an arrow to act as an entity for the player to sit on
                 Entity arrow = world.spawnArrow(player.getLocation().add(0,-0.5D,0),new Vector(0,90,0),0,0);
                 arrow.addPassenger(player);
                 // TODO add player to list of players resting while they are sitting
+                playerManager.addRester(player);
+//                BukkitTask removeRester = (BukkitTask) new RemoveRester(plugin).runTaskLater(plugin, 120L);
 
-                // set the time to night
-                world.setTime(13000); //Warning, I think this breaks days past stats, anyone care? No? Cool.
+                // Calc % of people resting
+                double percentResting = ((double)playerManager.getRestingPlayersArray().size()/(double)event.getClickedBlock()
+                        .getWorld().getPlayers().size())*100;
+                // tell everyone
+                for (Player p : event.getClickedBlock().getWorld().getPlayers()) {
+                    p.sendMessage(percentResting + "% of players are resting at campfires and want to pass the day.");
+                }
+                // See if % people resting > config's rest %
+                if (percentResting >= RestUp.getRestPercent()) {
+                    // set the time to night
+                    world.setTime(13000); //Warning, I think this breaks days past stats, anyone care? No? Cool.
+                    playerManager.clearResters(); // Clean up the array tracking % resting
+                }
             }
         }
 
