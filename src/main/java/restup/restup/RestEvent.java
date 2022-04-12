@@ -1,9 +1,6 @@
 package restup.restup;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -12,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 import restup.restup.tasks.RemoveRester;
@@ -49,19 +47,15 @@ public class RestEvent implements Listener {
                 armorStand.setGravity(false); // turn off the grav so it doesn't fall
                 armorStand.setVisible(false);
                 armorStand.addPassenger(player);
-                // spawn an arrow to act as an entity for the player to sit on
-//                Entity arrow = world.spawnArrow(player.getLocation().add(0,-0.5D,0),new Vector(0,90,0),0,0);
-//                arrow.addPassenger(player);
-                // TODO add player to list of players resting while they are sitting
+                // Add player to list of players resting while they are sitting
                 playerManager.addRester(player);
-//                BukkitTask removeRester = (BukkitTask) new RemoveRester(plugin).runTaskLater(plugin, 120L);
 
                 // Calc % of people resting
                 double percentResting = ((double)playerManager.getRestingPlayers().size()/(double)event.getClickedBlock()
                         .getWorld().getPlayers().size())*100;
                 // tell everyone
                 for (Player p : event.getClickedBlock().getWorld().getPlayers()) {
-                    p.sendMessage(percentResting + "% of players are resting at campfires and want to pass the day.");
+                    p.sendMessage(ChatColor.GOLD + "" + percentResting + "% of players are resting at campfires and want to pass the day.");
                 }
                 // See if % people resting > config's rest %
                 if (percentResting >= RestUp.getRestPercent()) {
@@ -71,6 +65,14 @@ public class RestEvent implements Listener {
                 }
             }
         }
+    }
 
+    @EventHandler
+    public void PlayerToggleSneakEvent(PlayerToggleSneakEvent event) {
+        Player player = event.getPlayer();
+        // if the player isn't resting, ignore the event
+        if(!playerManager.getRestingPlayers().contains(player)) return;
+        playerManager.removeRester(player);
+        Bukkit.getLogger().info("[RestUp] removed player from restingPlayers");
     }
 }
