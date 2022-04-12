@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class RestEvent implements Listener {
 //    RestUp plugin = new RestUp();
     PlayerManager playerManager = new PlayerManager();
+    ArmorStand armorStand;
     
     @EventHandler
     public void PlayerInteractEvent(PlayerInteractEvent event) {
@@ -43,7 +44,7 @@ public class RestEvent implements Listener {
 
                 player.sendMessage("You sit down to take a rest");
                 // spawn an armor stand to act as an entity for the player to sit on
-                ArmorStand armorStand = world.spawn(player.getLocation().add(0,-1.65,0), ArmorStand.class);
+                armorStand = world.spawn(player.getLocation().add(0,-1.65,0), ArmorStand.class);
                 armorStand.setGravity(false); // turn off the grav so it doesn't fall
                 armorStand.setVisible(false);
                 armorStand.addPassenger(player);
@@ -73,6 +74,7 @@ public class RestEvent implements Listener {
         // if the player isn't resting, ignore the event
         if(!playerManager.getRestingPlayers().contains(player)) return;
         playerManager.removeRester(player);
+        armorStand.remove(); // clean up stand
         Bukkit.getLogger().info("[RestUp] removed player from restingPlayers");
     }
 }
