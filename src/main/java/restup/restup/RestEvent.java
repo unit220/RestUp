@@ -1,9 +1,11 @@
 package restup.restup;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,9 +44,14 @@ public class RestEvent implements Listener {
                 }
 
                 player.sendMessage("You sit down to take a rest");
+                // spawn an armor stand to act as an entity for the player to sit on
+                ArmorStand armorStand = world.spawn(player.getLocation().add(0,-1.65,0), ArmorStand.class);
+                armorStand.setGravity(false); // turn off the grav so it doesn't fall
+                armorStand.setVisible(false);
+                armorStand.addPassenger(player);
                 // spawn an arrow to act as an entity for the player to sit on
-                Entity arrow = world.spawnArrow(player.getLocation().add(0,-0.5D,0),new Vector(0,90,0),0,0);
-                arrow.addPassenger(player);
+//                Entity arrow = world.spawnArrow(player.getLocation().add(0,-0.5D,0),new Vector(0,90,0),0,0);
+//                arrow.addPassenger(player);
                 // TODO add player to list of players resting while they are sitting
                 playerManager.addRester(player);
 //                BukkitTask removeRester = (BukkitTask) new RemoveRester(plugin).runTaskLater(plugin, 120L);
