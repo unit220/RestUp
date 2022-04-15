@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
+import org.spigotmc.event.entity.EntityDismountEvent;
 import restup.restup.tasks.RemoveRester;
 
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class RestEvent implements Listener {
                 armorStand.setGravity(false); // turn off the grav so it doesn't fall
                 armorStand.setVisible(false);
                 armorStand.addPassenger(player);
+                player.sendMessage("You are in a " + player.getVehicle());
                 // Add player to list of players resting while they are sitting
                 playerManager.addRester(player);
 
@@ -63,18 +65,36 @@ public class RestEvent implements Listener {
                     // set the time to night
                     world.setTime(13000); //Warning, I think this breaks days past stats, anyone care? No? Cool.
                     playerManager.clearResters(); // Clean up the array tracking % resting
+                    armorStand.remove(); // clean up stand
                 }
             }
         }
     }
 
+    //TODO this is probably better to use but is broken fix later
+//    @EventHandler
+//    public void onDismount(EntityDismountEvent event) {
+//        if(event.getEntity() instanceof Player)
+//        Player player = event.getEntity();
+//        if (!(event.getDismounted() instanceof ArmorStand)) return;
+//        armorStand.remove(); // clean up stand
+//        if(playerManager.getRestingPlayers().contains(player)) playerManager.removeRester(player);
+//        Bukkit.getLogger().info("[RestUp] removed player from restingPlayers");
+//    }
+
     @EventHandler
     public void PlayerToggleSneakEvent(PlayerToggleSneakEvent event) {
         Player player = event.getPlayer();
-        // if the player isn't resting, ignore the event
-        if(!playerManager.getRestingPlayers().contains(player)) return;
-        playerManager.removeRester(player);
+        // if player isn't sitting on stand, ignore the event
+        // this will never work right because the player gets up and thus their vehicle is null
+        // TODO add replacement so we aren't running all this every sneakevent!!!!
+//        if(!(player.getVehicle().toString().equals("CraftArmorStand"))) {
+//            return;
+//        }
+        player.sendMessage("You stand up");
         armorStand.remove(); // clean up stand
+        // remove player from list of resting players TODO move error checking to PlayerManager
+        if(playerManager.getRestingPlayers().contains(player)) playerManager.removeRester(player);
         Bukkit.getLogger().info("[RestUp] removed player from restingPlayers");
     }
 }
