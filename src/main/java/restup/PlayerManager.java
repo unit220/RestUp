@@ -1,4 +1,4 @@
-package restup.restup;
+package restup;
 
 import org.bukkit.entity.Player;
 

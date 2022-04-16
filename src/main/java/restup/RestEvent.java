@@ -1,4 +1,4 @@
-package restup.restup;
+package restup;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 import org.spigotmc.event.entity.EntityDismountEvent;
-import restup.restup.tasks.RemoveRester;
+import restup.tasks.RemoveRester;
 
 import java.util.ArrayList;
 
@@ -36,12 +36,13 @@ public class RestEvent implements Listener {
                 if(RestUp.getInvalidItemsList().contains(player.getInventory().getItemInMainHand().getType().toString())) {
                     return;
                 }
-                // quits if it is already night
-                if(world.getTime() >= 13000) {
+                // quits if it is already night (lets people sit at night if day skipping is disabled)
+                if(world.getTime() >= 13000 && RestUp.getSkipDayWhileResting() == true) {
                     player.sendMessage("You cannot pass the day while it is night!");
                     return;
                 }
 
+                // Sitting down
                 player.sendMessage("You sit down to take a rest");
                 // spawn an armor stand to act as an entity for the player to sit on
                 armorStand = world.spawn(player.getLocation().add(0,-1.65,0), ArmorStand.class);

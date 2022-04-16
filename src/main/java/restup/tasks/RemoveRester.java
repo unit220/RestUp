@@ -1,7 +1,7 @@
-package restup.restup.tasks;
+package restup.tasks;
 
 import org.bukkit.scheduler.BukkitRunnable;
-import restup.restup.RestUp;
+import restup.RestUp;
 
 public class RemoveRester extends BukkitRunnable {
 

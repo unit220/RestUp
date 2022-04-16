@@ -1,4 +1,4 @@
-main: restup.restup.RestUp
+main: restup.RestUp
 name: RestUp
 version: '${project.version}'
 api-version: 1.18
