@@ -33,7 +33,13 @@ public class RestEvent implements Listener {
             // Bukkit.getLogger().info(player.getInventory().getItemInMainHand().getType().toString());
 
             if(block.getType() == Material.CAMPFIRE) {
+<<<<<<< Updated upstream
                 // quits out if holding something cookable
+=======
+                // quits out if already sitting
+                if(player.getVehicle() instanceof ArmorStand) { return; }
+                // quits out if holding something cookable 
+>>>>>>> Stashed changes
                 if(RestUp.getInvalidItemsList().contains(player.getInventory().getItemInMainHand().getType().toString())) {
                     return;
                 }
