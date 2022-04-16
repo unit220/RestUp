@@ -29,17 +29,10 @@ public class RestEvent implements Listener {
             World world = event.getClickedBlock().getWorld();
             Player player = event.getPlayer();
 
-            // See what user is holding
-            // Bukkit.getLogger().info(player.getInventory().getItemInMainHand().getType().toString());
-
             if(block.getType() == Material.CAMPFIRE) {
-<<<<<<< Updated upstream
-                // quits out if holding something cookable
-=======
                 // quits out if already sitting
                 if(player.getVehicle() instanceof ArmorStand) { return; }
-                // quits out if holding something cookable 
->>>>>>> Stashed changes
+                // quits out if holding something cookable
                 if(RestUp.getInvalidItemsList().contains(player.getInventory().getItemInMainHand().getType().toString())) {
                     return;
                 }
