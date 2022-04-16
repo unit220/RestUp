@@ -48,16 +48,21 @@ public class RestEvent implements Listener {
                 armorStand.setGravity(false); // turn off the grav so it doesn't fall
                 armorStand.setVisible(false);
                 armorStand.addPassenger(player);
-                player.sendMessage("You are in a " + player.getVehicle());
+                //player.sendMessage("You are in a " + player.getVehicle());
                 // Add player to list of players resting while they are sitting
                 playerManager.addRester(player);
 
                 // Calc % of people resting
                 double percentResting = ((double)playerManager.getRestingPlayers().size()/(double)event.getClickedBlock()
                         .getWorld().getPlayers().size())*100;
+                // Calc total # of people needed to rest in a given world
+                int totalNeedToRest = (int) RestUp.getRestPercent() * (int) event.getClickedBlock().getWorld().getPlayers().size();
+                // Calc remaining # of people needed to rest in a given world
+                int remainingNeedToRest = totalNeedToRest - playerManager.getRestingPlayers().size();
                 // tell everyone
                 for (Player p : event.getClickedBlock().getWorld().getPlayers()) {
-                    p.sendMessage(ChatColor.GOLD + "" + percentResting + "% of players are resting at campfires and want to pass the day.");
+                    p.sendMessage(ChatColor.YELLOW + "" + player.getDisplayName() + " is resting at a campfire (" + playerManager.getRestingPlayers().size()
+                            + "/" + totalNeedToRest + ", " +remainingNeedToRest+ " more needed to pass the day).");
                 }
                 // See if % people resting > config's rest %
                 if (percentResting >= RestUp.getRestPercent()) {
@@ -90,7 +95,7 @@ public class RestEvent implements Listener {
 //        if(!(player.getVehicle().toString().equals("CraftArmorStand"))) {
 //            return;
 //        }
-        player.sendMessage("You stand up");
+        //player.sendMessage("You stand up");
         armorStand.remove(); // clean up stand
         // remove player from list of resting players TODO move error checking to PlayerManager
         if(playerManager.getRestingPlayers().contains(player)) playerManager.removeRester(player);
