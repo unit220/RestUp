@@ -11,6 +11,7 @@ import java.util.List;
 public final class RestUp extends JavaPlugin {
     static List<String> invalidItemsList; // this is probably bad...
     static double restPercent; // but I'ma doit again
+    static boolean skipDayWhileResting;
 
     @Override
     public void onEnable() {
@@ -42,4 +43,6 @@ public final class RestUp extends JavaPlugin {
     }
 
     public static double getRestPercent() { return restPercent; }
+
+    public static boolean getSkipDayWhileResting() { return skipDayWhileResting; }
 }
